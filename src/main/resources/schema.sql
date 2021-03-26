@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS Organization (
-    id         INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
+    id         INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
     version    INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
     name       VARCHAR(20) NOT NULL COMMENT 'Имя',
     full_name  VARCHAR(50) NOT NULL COMMENT 'Полное имя',
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Organization (
 COMMENT ON TABLE Organization IS 'Организация';
 
 CREATE TABLE IF NOT EXISTS Office (
-    id         INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
+    id         INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
     version    INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
     org_id     INTEGER     NOT NULL COMMENT 'Уникальный идентификатор организации',
     name       VARCHAR(20) NOT NULL COMMENT 'Имя',
@@ -22,29 +22,39 @@ CREATE TABLE IF NOT EXISTS Office (
 COMMENT ON TABLE Office IS 'Офис';
 
 CREATE TABLE IF NOT EXISTS User (
-    id          INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT ,
+    id          INTEGER              COMMENT 'Уникальный идентификатор' PRIMARY KEY AUTO_INCREMENT,
     version     INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
     office_id   INTEGER     NOT NULL COMMENT 'Уникальный идентификатор офиса',
     first_name  VARCHAR(20) NOT NULL COMMENT 'Имя',
     last_name   VARCHAR(30)          COMMENT 'Фамилия',
     middle_name VARCHAR(25)          COMMENT 'Отчество',
-    position   VARCHAR(20) NOT NULL COMMENT 'Должность',
+    position   VARCHAR(20) NOT NULL  COMMENT 'Должность',
     phone       VARCHAR(11)          COMMENT 'Телефон',
+    doc_number  VARCHAR(20)          COMMENT 'Номер',
+    doc_date    DATE                 COMMENT 'Дата выдачи'
     is_identified VARCHAR(1)         COMMENT 'Идентифицирован'
 );
 COMMENT ON TABLE User IS 'Пользователь';
 
 CREATE TABLE IF NOT EXISTS Doc (
-    user_id     INTEGER     NOT NULL COMMENT 'Уникальный идентификатор пользователя',
+    user_id     INTEGER     NOT NULL COMMENT 'Уникальный идентификатор пользователя' PRIMARY KEY,
     version     INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
     doc_name    VARCHAR(50)          COMMENT 'Наименование',
-    doc_number  VARCHAR(20)          COMMENT 'Номер',
-    doc_date    DATE                 COMMENT 'Дата выдачи',
-    citizenship_name VARCHAR(50)     COMMENT 'Гражданство',
-    citizenship_code VARCHAR(3)      COMMENT 'Код гражданства',
     doc_code    VARCHAR(2)           COMMENT 'Код документа'
 );
 COMMENT ON TABLE Doc IS 'Документ';
+
+CREATE TABLE IF NOT EXISTS Country (
+   user_id     INTEGER     NOT NULL COMMENT 'Уникальный идентификатор пользователя' PRIMARY KEY,
+   version     INTEGER     NOT NULL COMMENT 'Служебное поле hibernate',
+   citizenship_name VARCHAR(50)     COMMENT 'Наименование',
+   citizenship_code VARCHAR(3)      COMMENT 'Код страны'
+);
+COMMENT ON TABLE Citizenship IS 'Страна';
+
+
+
+
 
 CREATE INDEX IX_Organization_id ON Office (org_id);
 ALTER TABLE Office ADD FOREIGN KEY (org_id) REFERENCES Organization(id);
@@ -54,3 +64,6 @@ ALTER TABLE User ADD FOREIGN KEY (office_id) REFERENCES Office(id);
 
 CREATE INDEX IX_Doc_id ON Doc (user_id);
 ALTER TABLE Doc ADD FOREIGN KEY (user_id) REFERENCES User(id);
+
+CREATE INDEX IX_Country_id ON Country (user_id);
+ALTER TABLE Country ADD FOREIGN KEY (user_id) REFERENCES User(id);
