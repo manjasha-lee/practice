@@ -52,7 +52,7 @@ public class User {
     private Doc doc;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name = "id")
     private Country country;
 
     public Integer getId() {

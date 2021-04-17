@@ -32,7 +32,7 @@ public class Doc {
     private LocalDate docDate;
 
     @ManyToOne
-    @JoinColumn(name = "doc_type_id")
+    @JoinColumn(name = "id")
     private DocType docType;
 
     public Integer getUserId() {
