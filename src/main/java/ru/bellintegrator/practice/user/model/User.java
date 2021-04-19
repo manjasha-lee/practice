@@ -48,12 +48,9 @@ public class User {
     @Column(name = "is_identified", nullable = true)
     private boolean isIdentified;
 
-    @OneToOne(mappedBy = "user_id", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "user_id")
     private Doc doc;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
-    private Country country;
 
     public Integer getId() {
         return id;
@@ -121,14 +118,6 @@ public class User {
 
     public void setIdentified(boolean identified) {
         isIdentified = identified;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
     }
 
     public Doc getDoc() {

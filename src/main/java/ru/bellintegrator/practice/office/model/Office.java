@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.ArrayList;
@@ -35,7 +36,8 @@ public class Office {
     @Column(name = "is_active", nullable = true)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "office_id", cascade= CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "office_id")
     private List<User> users;
 
     public Integer getId() {

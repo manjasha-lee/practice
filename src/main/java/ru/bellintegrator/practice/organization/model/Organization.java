@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class Organization {
     @Column(name = "is_active", nullable = true)
     private boolean isActive;
 
-    @OneToMany(mappedBy = "org_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "org_id")
     private List<Office> offices;
 
     public Integer getId() {

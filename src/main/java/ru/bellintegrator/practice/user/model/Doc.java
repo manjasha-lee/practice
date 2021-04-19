@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 import java.time.LocalDate;
 
@@ -30,10 +28,6 @@ public class Doc {
 
     @Column(name = "doc_date", nullable = false)
     private LocalDate docDate;
-
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private DocType docType;
 
     public Integer getUserId() {
         return userId;
@@ -63,11 +57,4 @@ public class Doc {
         this.docDate = docDate;
     }
 
-    public DocType getDocType() {
-        return docType;
-    }
-
-    public void setDocType(DocType docType) {
-        this.docType = docType;
-    }
 }
