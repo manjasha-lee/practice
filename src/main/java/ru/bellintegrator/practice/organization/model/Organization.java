@@ -1,18 +1,13 @@
 package ru.bellintegrator.practice.organization.model;
 
-import ru.bellintegrator.practice.office.model.Office;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Version;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity(name = "Organization")
 public class Organization {
@@ -45,9 +40,6 @@ public class Organization {
     @Column(name = "is_active", nullable = true)
     private boolean isActive;
 
-    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "org_id")
-    private List<Office> offices;
 
     public Integer getId() {
         return id;
@@ -109,14 +101,4 @@ public class Organization {
         isActive = active;
     }
 
-    public List<Office> getOffices() {
-        if(offices == null){
-            offices = new ArrayList<>();
-        }
-        return offices;
-    }
-
-    public void setOffices(List<Office> offices) {
-        this.offices = offices;
-    }
 }

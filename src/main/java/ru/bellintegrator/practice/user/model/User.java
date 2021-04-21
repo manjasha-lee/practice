@@ -1,6 +1,8 @@
 package ru.bellintegrator.practice.user.model;
 
+
 import ru.bellintegrator.practice.dictionary.model.Country;
+import ru.bellintegrator.practice.office.model.Office;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,9 +50,17 @@ public class User {
     @Column(name = "is_identified", nullable = true)
     private boolean isIdentified;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "office_id")
+    private Office office;
+
+    @OneToOne(mappedBy = "id", fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     private Doc doc;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    private Country country;
+
 
     public Integer getId() {
         return id;
@@ -126,6 +136,22 @@ public class User {
 
     public void setDoc(Doc doc) {
         this.doc = doc;
+    }
+
+    public Office getOffice() {
+        return office;
+    }
+
+    public void setOffice(Office office) {
+        this.office = office;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
     }
 }
 

@@ -1,18 +1,18 @@
 package ru.bellintegrator.practice.office.model;
 
-import ru.bellintegrator.practice.user.model.User;
+import ru.bellintegrator.practice.organization.model.Organization;
 
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Version;
-import java.util.ArrayList;
-import java.util.List;
+
 
 @Entity(name = "Office")
 public class Office {
@@ -36,9 +36,10 @@ public class Office {
     @Column(name = "is_active", nullable = true)
     private boolean isActive;
 
-    @OneToMany(cascade= CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "office_id")
-    private List<User> users;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "org_id")
+    private Organization organization;
+
 
     public Integer getId() {
         return id;
@@ -76,14 +77,11 @@ public class Office {
         isActive = active;
     }
 
-    public List<User> getUsers() {
-        if(users == null){
-            users = new ArrayList<>();
-        }
-        return users;
+    public Organization getOrganization() {
+        return organization;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setOrganization(Organization organization) {
+        this.organization = organization;
     }
 }
